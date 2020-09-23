@@ -1,10 +1,5 @@
 import RootedTree from "./rootedtree";
-
-type Defined = string | number | boolean | object;
-
-function isDefined(node: Defined | null): node is Defined {
-  return node !== null;
-}
+import { isDefined, Defined } from "./types";
 
 class FreeTree {
   links: Map<Defined, Defined[]>;
@@ -50,7 +45,7 @@ class FreeTree {
     }
   }
 
-  protected recursiveTree(node: Defined, lastNode: Defined | null): RootedTree {
+  private recursiveTree(node: Defined, lastNode: Defined | null): RootedTree {
     const currChildren = this.links
       .get(node)!
       .filter((elm) => elm !== lastNode);
@@ -63,10 +58,6 @@ class FreeTree {
         ...currChildren?.map((child) => this.recursiveTree(child, node))
       );
     }
-  }
-
-  toString() {
-    console.log(this.links);
   }
 }
 
